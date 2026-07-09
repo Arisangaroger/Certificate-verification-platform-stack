@@ -1,0 +1,55 @@
+erDiagram
+    UNIVERSITIES ||--o{ STUDENT : has
+    UNIVERSITIES ||--o{ CERTIFICATES : issues
+    UNIVERSITIES ||--o{ INSTITUTION_ADMINS : employs
+    STUDENT ||--o{ CERTIFICATES : owns
+
+    UNIVERSITIES {
+        uuid id PK
+        varchar name
+        varchar wallet_address
+        varchar did_identifier UK
+        text encrypted_private_key
+        varchar public_key_hex
+        varchar email UK
+        varchar phone_number
+        text logo_url
+        timestamptz created_at
+    }
+
+    STUDENT {
+        uuid id PK
+        uuid university_id FK
+        varchar student_id_number
+        varchar full_name
+        varchar email UK
+        varchar phone
+        varchar national_id UK
+        text photo_url
+        timestamptz created_at
+    }
+
+    CERTIFICATES {
+        varchar id PK
+        uuid student_id FK
+        uuid university_id FK
+        varchar degree_title
+        int graduation_year
+        varchar class_award
+        varchar data_hash
+        text pdf_url
+        varchar blockchain_transaction_hash
+        varchar verification_status
+        timestamptz created_at
+    }
+
+    INSTITUTION_ADMINS {
+        uuid id PK
+        uuid university_id FK
+        varchar full_name
+        varchar email UK
+        varchar password_hash
+        enum role
+        boolean is_active
+        timestamptz created_at
+    }

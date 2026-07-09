@@ -1,0 +1,27 @@
+sequenceDiagram
+    participant Admin
+    participant FE as Frontend Port 3001
+    participant BE as Backend Port 3000
+    participant DB as PostgreSQL
+    participant BC as CredentialRegistry
+    participant V as Public Verifier
+
+    Admin->>FE: Upload Excel CSV
+    FE->>BE: POST file-upload batch
+    BE->>BE: Compute keccak256 data_hash
+    BE->>DB: Save certificates status ISSUED
+
+    Admin->>FE: Issue to Blockchain
+    FE->>BE: POST issue-to-blockchain
+    BE->>DB: Load certs and university DID
+    BE->>BC: issueCredentials hashes and DIDs
+    BC-->>BE: Transaction hash
+    BE->>DB: Update status VERIFIED
+
+    V->>FE: Open verify page or scan QR
+    FE->>BE: GET verification certificate_id
+    BE->>DB: Load certificate student university
+    BE->>BE: Recompute hash match stored hash
+    BE->>BC: getCredential data_hash
+    BC-->>BE: issuerDid blockTime isRevoked exists
+    BE-->>FE: Valid if all three gates pass

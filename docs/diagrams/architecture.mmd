@@ -1,0 +1,57 @@
+flowchart TB
+    subgraph Actors["Actors"]
+        ADM["University Admin<br/>SUPER_ADMIN / REGISTRAR / VIEWER"]
+        STU["Student"]
+        PUB["Public Verifier"]
+    end
+
+    subgraph FE["Frontend - Next.js Port 3001"]
+        AdminUI["Admin Console<br/>Universities, Upload, Blockchain,<br/>Certificates, Students, Users"]
+        PortalUI["Student Portal<br/>OTP Login, Dashboard,<br/>PDF Download, QR Code"]
+        VerifyUI["Public Verify Page<br/>/verify/certificate_id"]
+    end
+
+    subgraph BE["Backend - NestJS Port 3000 /api"]
+        Auth["auth - JWT and Student OTP"]
+        Uni["universities - DID Provisioning"]
+        StudentsMod["students"]
+        Certs["certificates - Issue to Blockchain"]
+        Upload["file-upload - Excel to ISSUED"]
+        Verif["verification - Three-Way Match"]
+        Chain["blockchain - Hash and Mint"]
+        Crypto["crypto - AES Keys"]
+        PDF["pdf-generator - PDF and QR"]
+        Notif["notification - OTP Email"]
+    end
+
+    subgraph EXT["External Services"]
+        DB[("PostgreSQL<br/>universities, student,<br/>certificates, institution_admins")]
+        OPT["Optimism Sepolia L2<br/>CredentialRegistry Contract"]
+        SMTP["SMTP Brevo"]
+        Chrome["Chrome Puppeteer"]
+    end
+
+    ADM --> AdminUI
+    STU --> PortalUI
+    PUB --> VerifyUI
+
+    AdminUI -->|HTTPS REST| BE
+    PortalUI -->|HTTPS REST| BE
+    VerifyUI -->|HTTPS REST| BE
+
+    Auth --> DB
+    Uni --> DB
+    Uni --> Crypto
+    StudentsMod --> DB
+    Upload --> DB
+    Upload --> Chain
+    Certs --> DB
+    Certs --> Chain
+    Certs --> PDF
+    Verif --> DB
+    Verif --> Chain
+    Auth --> Notif
+    Notif --> SMTP
+    PDF --> Chrome
+
+    Chain -->|issueCredentials getCredential revoke| OPT

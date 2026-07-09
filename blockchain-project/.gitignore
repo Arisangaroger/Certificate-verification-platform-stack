@@ -1,0 +1,39 @@
+# Environment — never commit secrets
+.env
+.env.local
+.env.*.local
+
+# Hardhat artifacts & cache
+artifacts/
+cache/
+typechain-types/
+
+# Deployment outputs (keep deployments/ in git for reference, or ignore if preferred)
+# deployments/
+
+# Coverage
+coverage/
+coverage.json
+.solcover.js
+
+# Gas report
+gas-report.txt
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?

@@ -1,0 +1,1617 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/api/auth/admin/login": {
+      "post": {
+        "description": "Authenticate an institution admin or super admin and receive a JWT.",
+        "operationId": "AuthController_adminLogin",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginAdminDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Login successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminLoginResponseDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials"
+          }
+        },
+        "summary": "Admin login",
+        "tags": [
+          "Auth"
+        ]
+      }
+    },
+    "/api/auth/student/request-otp": {
+      "post": {
+        "description": "Send a one-time password to the student after validating registration number and national ID.",
+        "operationId": "AuthController_requestStudentOtp",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestOtpDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OTP sent to student email",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessageResponseDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid student credentials"
+          }
+        },
+        "summary": "Request student OTP",
+        "tags": [
+          "Auth"
+        ]
+      }
+    },
+    "/api/auth/student/verify-otp": {
+      "post": {
+        "description": "Validate the OTP and receive a student JWT.",
+        "operationId": "AuthController_verifyStudentOtp",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VerifyOtpDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OTP verified",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudentLoginResponseDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid or expired OTP"
+          }
+        },
+        "summary": "Verify student OTP",
+        "tags": [
+          "Auth"
+        ]
+      }
+    },
+    "/api/admin-users": {
+      "post": {
+        "operationId": "AdminUsersController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateAdminUserDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "JWT-auth": []
+          }
+        ],
+        "summary": "Create admin user",
+        "tags": [
+          "Admin Users"
+        ]
+      },
+      "get": {
+        "operationId": "AdminUsersController_findAll",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "JWT-auth": []
+          }
+        ],
+        "summary": "List admin users",
+        "tags": [
+          "Admin Users"
+        ]
+      }
+    },
+    "/api/admin-users/{id}": {
+      "get": {
+        "operationId": "AdminUsersController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "JWT-auth": []
+          }
+        ],
+        "summary": "Get admin user by ID",
+        "tags": [
+          "Admin Users"
+        ]
+      },
+      "patch": {
+        "operationId": "AdminUsersController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateAdminUserDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "JWT-auth": []
+          }
+        ],
+        "summary": "Update admin user",
+        "tags": [
+          "Admin Users"
+        ]
+      },
+      "delete": {
+        "operationId": "AdminUsersController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "JWT-auth": []
+          }
+        ],
+        "summary": "Delete admin user",
+        "tags": [
+          "Admin Users"
+        ]
+      }
+    },
+    "/api/admin-users/{id}/deactivate": {
+      "patch": {
+        "operationId": "AdminUsersController_deactivate",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "JWT-auth": []
+          }
+        ],
+        "summary": "Deactivate admin user",
+        "tags": [
+          "Admin Users"
+        ]
+      }
+    },
+    "/api/admin-users/{id}/activate": {
+      "patch": {
+        "operationId": "AdminUsersController_activate",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "JWT-auth": []
+          }
+        ],
+        "summary": "Activate admin user",
+        "tags": [
+          "Admin Users"
+        ]
+      }
+    },
+    "/api/students/profile": {
+      "get": {
+        "operationId": "StudentsController_getProfile",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "JWT-auth": []
+          }
+        ],
+        "summary": "Get logged-in student profile",
+        "tags": [
+          "Students"
+        ]
+      }
+    },
+    "/api/students/count": {
+      "get": {
+        "description": "Super admin use.",
+        "operationId": "StudentsController_count",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "JWT-auth": []
+          }
+        ],
+        "summary": "Count all students",
+        "tags": [
+          "Students"
+        ]
+      }
+    },
+    "/api/students/university/{universityId}": {
+      "get": {
+        "operationId": "StudentsController_findByUniversity",
+        "parameters": [
+          {
+            "name": "universityId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "JWT-auth": []
+          }
+        ],
+        "summary": "List students by university",
+        "tags": [
+          "Students"
+        ]
+      }
+    },
+    "/api/students/university/{universityId}/count": {
+      "get": {
+        "operationId": "StudentsController_countByUniversity",
+        "parameters": [
+          {
+            "name": "universityId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "JWT-auth": []
+          }
+        ],
+        "summary": "Count students by university",
+        "tags": [
+          "Students"
+        ]
+      }
+    },
+    "/api/students/{id}": {
+      "get": {
+        "operationId": "StudentsController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "JWT-auth": []
+          }
+        ],
+        "summary": "Get student by ID",
+        "tags": [
+          "Students"
+        ]
+      }
+    },
+    "/api/universities": {
+      "get": {
+        "operationId": "UniversitiesController_findAll",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "List all universities",
+        "tags": [
+          "Universities"
+        ]
+      },
+      "post": {
+        "description": "Super admin only. Auto-generates blockchain identity.",
+        "operationId": "UniversitiesController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUniversityDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "JWT-auth": []
+          }
+        ],
+        "summary": "Create university",
+        "tags": [
+          "Universities"
+        ]
+      }
+    },
+    "/api/universities/{id}": {
+      "get": {
+        "operationId": "UniversitiesController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Get university by ID",
+        "tags": [
+          "Universities"
+        ]
+      },
+      "patch": {
+        "description": "Super admin only.",
+        "operationId": "UniversitiesController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateUniversityDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "JWT-auth": []
+          }
+        ],
+        "summary": "Update university",
+        "tags": [
+          "Universities"
+        ]
+      },
+      "delete": {
+        "description": "Super admin only.",
+        "operationId": "UniversitiesController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "JWT-auth": []
+          }
+        ],
+        "summary": "Delete university",
+        "tags": [
+          "Universities"
+        ]
+      }
+    },
+    "/api/universities/{id}/provision-identity": {
+      "post": {
+        "description": "Creates DID and wallet keys if missing.",
+        "operationId": "UniversitiesController_provisionIdentity",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "JWT-auth": []
+          }
+        ],
+        "summary": "Provision blockchain identity",
+        "tags": [
+          "Universities"
+        ]
+      }
+    },
+    "/api/certificates/student/{studentId}": {
+      "get": {
+        "operationId": "CertificatesController_findByStudent",
+        "parameters": [
+          {
+            "name": "studentId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "List certificates for a student",
+        "tags": [
+          "Certificates"
+        ]
+      }
+    },
+    "/api/certificates/stats": {
+      "get": {
+        "operationId": "CertificatesController_getStats",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CertificateStatsDto"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Global certificate statistics",
+        "tags": [
+          "Certificates"
+        ]
+      }
+    },
+    "/api/certificates/university/{universityId}": {
+      "get": {
+        "operationId": "CertificatesController_findByUniversity",
+        "parameters": [
+          {
+            "name": "universityId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "List certificates by university",
+        "tags": [
+          "Certificates"
+        ]
+      }
+    },
+    "/api/certificates/university/{universityId}/stats": {
+      "get": {
+        "operationId": "CertificatesController_getStatsByUniversity",
+        "parameters": [
+          {
+            "name": "universityId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CertificateStatsDto"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Certificate statistics by university",
+        "tags": [
+          "Certificates"
+        ]
+      }
+    },
+    "/api/certificates/issue-to-blockchain/{universityId}": {
+      "post": {
+        "description": "Batch mint selected certificate hashes on Optimism Sepolia via CredentialRegistry.issueCredentials. Updates status to VERIFIED and stores the transaction hash.",
+        "operationId": "CertificatesController_issueToBlockchain",
+        "parameters": [
+          {
+            "name": "universityId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IssueToBlockchainDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IssueToBlockchainResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid batch or blockchain error"
+          },
+          "404": {
+            "description": "Certificates not found"
+          }
+        },
+        "security": [
+          {
+            "JWT-auth": []
+          }
+        ],
+        "summary": "Issue certificates to blockchain",
+        "tags": [
+          "Certificates"
+        ]
+      }
+    },
+    "/api/certificates/{certificateId}": {
+      "patch": {
+        "description": "Only allowed before blockchain issuance.",
+        "operationId": "CertificatesController_updateCertificate",
+        "parameters": [
+          {
+            "name": "certificateId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "example": "Vpg3YCjx7i1O",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateCertificateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "JWT-auth": []
+          }
+        ],
+        "summary": "Update certificate",
+        "tags": [
+          "Certificates"
+        ]
+      },
+      "delete": {
+        "description": "Only allowed before blockchain issuance.",
+        "operationId": "CertificatesController_deleteCertificate",
+        "parameters": [
+          {
+            "name": "certificateId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "example": "Vpg3YCjx7i1O",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessageResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT-auth": []
+          }
+        ],
+        "summary": "Delete certificate",
+        "tags": [
+          "Certificates"
+        ]
+      }
+    },
+    "/api/certificates/{certificateId}/download": {
+      "get": {
+        "operationId": "CertificatesController_downloadPdf",
+        "parameters": [
+          {
+            "name": "certificateId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "example": "Vpg3YCjx7i1O",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "PDF file stream"
+          },
+          "404": {
+            "description": "Certificate not found"
+          }
+        },
+        "summary": "Download certificate PDF",
+        "tags": [
+          "Certificates"
+        ]
+      }
+    },
+    "/api/verification/{certificate_id}": {
+      "get": {
+        "description": "Runs the three-way match: database lookup, keccak256 hash recalculation, and on-chain registry validation (exists, not revoked, issuer DID match). No authentication required.",
+        "operationId": "VerificationController_verify",
+        "parameters": [
+          {
+            "name": "certificate_id",
+            "required": true,
+            "in": "path",
+            "description": "12-character certificate ID",
+            "schema": {
+              "example": "Vpg3YCjx7i1O",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Verification failed (invalid or tampered credential)\n\nCredential is authentic",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VerificationSuccessResponseDto"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Certificate not found"
+          }
+        },
+        "summary": "Verify a certificate (public)",
+        "tags": [
+          "Verification"
+        ]
+      }
+    },
+    "/api/file-upload/batch": {
+      "post": {
+        "description": "Import students and certificates from .xlsx or .xls file. Creates ISSUED records with computed data_hash.",
+        "operationId": "FileUploadController_uploadBatch",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "file",
+                  "university_id"
+                ],
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "university_id": {
+                    "type": "string",
+                    "format": "uuid"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BatchUploadResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT-auth": []
+          }
+        ],
+        "summary": "Upload Excel batch",
+        "tags": [
+          "File Upload"
+        ]
+      }
+    },
+    "/api/file-upload/batch-data": {
+      "post": {
+        "description": "Import pre-parsed student and certificate rows. Creates ISSUED records.",
+        "operationId": "FileUploadController_uploadBatchData",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UploadBatchDataDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BatchUploadResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT-auth": []
+          }
+        ],
+        "summary": "Upload batch JSON data",
+        "tags": [
+          "File Upload"
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "CertiChain API",
+    "description": "## Certificate Verification Platform API\n\nREST API for issuing academic credentials, anchoring them on **Optimism Sepolia L2**, and verifying authenticity through a **three-way match** (database + hash + blockchain).\n\n### Base URL\nAll routes are prefixed with `/api`.\n\n### Authentication\n1. **Admin** — `POST /api/auth/admin/login` with email and password. Copy the `access_token` from the response.\n2. **Student** — `POST /api/auth/student/request-otp`, then `POST /api/auth/student/verify-otp`. Copy the returned `access_token`.\n3. Click **Authorize** (top right), paste `Bearer <token>` or just the token (Swagger adds Bearer automatically for JWT-auth).\n\n### Typical admin workflow\n1. Login as admin → create university → upload Excel batch (`ISSUED`) → issue to blockchain (`VERIFIED`) → share certificate ID or PDF QR for public verification.\n\n### Public verification\n`GET /api/verification/{certificate_id}` — no authentication required.\n\n### Certificate statuses\n- `ISSUED` — stored in database only; hash computed but not yet on-chain.\n- `VERIFIED` — minted on Optimism Sepolia; public verification succeeds.\n- `REVOKED` — revoked on-chain; verification fails.\n\n### Blockchain\nContract: `CredentialRegistry` on Optimism Sepolia. Each certificate is stored as a `keccak256` hash commitment linked to the issuing university's `did:key` identifier.",
+    "version": "1.0.0",
+    "contact": {
+      "name": "CertiChain Platform",
+      "url": "",
+      "email": "support@certichain.local"
+    }
+  },
+  "tags": [
+    {
+      "name": "Health",
+      "description": "Service health check"
+    },
+    {
+      "name": "Auth",
+      "description": "Admin login and student OTP authentication"
+    },
+    {
+      "name": "Universities",
+      "description": "University management and blockchain identity (DID)"
+    },
+    {
+      "name": "Admin Users",
+      "description": "Institution admin account management"
+    },
+    {
+      "name": "Students",
+      "description": "Student records (JWT required)"
+    },
+    {
+      "name": "Certificates",
+      "description": "Certificate CRUD, PDF download, and blockchain issuance"
+    },
+    {
+      "name": "Verification",
+      "description": "Public certificate verification (no auth)"
+    },
+    {
+      "name": "File Upload",
+      "description": "Batch student and certificate import from Excel"
+    }
+  ],
+  "servers": [
+    {
+      "url": "http://localhost:3000",
+      "description": "Local development (port 3000)"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "JWT-auth": {
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "type": "http",
+        "description": "JWT from POST /api/auth/admin/login or POST /api/auth/student/verify-otp"
+      }
+    },
+    "schemas": {
+      "LoginAdminDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "admin@university.edu"
+          },
+          "password": {
+            "type": "string",
+            "example": "SecurePass123",
+            "minLength": 8
+          }
+        },
+        "required": [
+          "email",
+          "password"
+        ]
+      },
+      "AdminUserSummaryDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "email": {
+            "type": "string",
+            "example": "registrar@university.edu"
+          },
+          "full_name": {
+            "type": "string",
+            "example": "Jane Registrar"
+          },
+          "role": {
+            "type": "string",
+            "enum": [
+              "SUPER_ADMIN",
+              "REGISTRAR",
+              "VIEWER"
+            ]
+          },
+          "university_id": {
+            "type": "object",
+            "format": "uuid",
+            "nullable": true
+          }
+        },
+        "required": [
+          "id",
+          "email",
+          "full_name",
+          "role"
+        ]
+      },
+      "AdminLoginResponseDto": {
+        "type": "object",
+        "properties": {
+          "access_token": {
+            "type": "string",
+            "description": "JWT bearer token for protected admin routes"
+          },
+          "user": {
+            "$ref": "#/components/schemas/AdminUserSummaryDto"
+          }
+        },
+        "required": [
+          "access_token",
+          "user"
+        ]
+      },
+      "RequestOtpDto": {
+        "type": "object",
+        "properties": {
+          "student_id_number": {
+            "type": "string",
+            "example": "STU2024001"
+          },
+          "national_id": {
+            "type": "string",
+            "example": "1199780123456789"
+          }
+        },
+        "required": [
+          "student_id_number",
+          "national_id"
+        ]
+      },
+      "MessageResponseDto": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Operation completed successfully"
+          }
+        },
+        "required": [
+          "message"
+        ]
+      },
+      "VerifyOtpDto": {
+        "type": "object",
+        "properties": {
+          "student_id_number": {
+            "type": "string",
+            "example": "STU2024001"
+          },
+          "national_id": {
+            "type": "string",
+            "example": "1199780123456789"
+          },
+          "otp": {
+            "type": "string",
+            "example": "123456",
+            "minLength": 6,
+            "maxLength": 6
+          }
+        },
+        "required": [
+          "student_id_number",
+          "national_id",
+          "otp"
+        ]
+      },
+      "StudentSummaryDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "student_id_number": {
+            "type": "string",
+            "example": "STU2024001"
+          },
+          "full_name": {
+            "type": "string",
+            "example": "Alice Uwimana"
+          },
+          "email": {
+            "type": "string",
+            "example": "alice@student.edu"
+          }
+        },
+        "required": [
+          "id",
+          "student_id_number",
+          "full_name",
+          "email"
+        ]
+      },
+      "StudentLoginResponseDto": {
+        "type": "object",
+        "properties": {
+          "access_token": {
+            "type": "string",
+            "description": "JWT bearer token for student routes"
+          },
+          "student": {
+            "$ref": "#/components/schemas/StudentSummaryDto"
+          }
+        },
+        "required": [
+          "access_token",
+          "student"
+        ]
+      },
+      "CreateAdminUserDto": {
+        "type": "object",
+        "properties": {
+          "university_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "full_name": {
+            "type": "string",
+            "example": "Jane Registrar"
+          },
+          "email": {
+            "type": "string",
+            "example": "registrar@university.edu"
+          },
+          "password": {
+            "type": "string",
+            "example": "SecurePass123",
+            "minLength": 8
+          },
+          "role": {
+            "type": "string",
+            "enum": [
+              "SUPER_ADMIN",
+              "REGISTRAR",
+              "VIEWER"
+            ],
+            "example": "REGISTRAR"
+          }
+        },
+        "required": [
+          "full_name",
+          "email",
+          "password",
+          "role"
+        ]
+      },
+      "UpdateAdminUserDto": {
+        "type": "object",
+        "properties": {
+          "full_name": {
+            "type": "string",
+            "example": "Jane Registrar"
+          },
+          "email": {
+            "type": "string",
+            "example": "registrar@university.edu"
+          },
+          "password": {
+            "type": "string",
+            "example": "NewSecurePass123",
+            "minLength": 8
+          },
+          "role": {
+            "type": "string",
+            "enum": [
+              "SUPER_ADMIN",
+              "REGISTRAR",
+              "VIEWER"
+            ]
+          },
+          "is_active": {
+            "type": "boolean",
+            "example": true
+          }
+        }
+      },
+      "CreateUniversityDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Aurora University"
+          },
+          "email": {
+            "type": "string",
+            "example": "registrar@aurora.edu"
+          },
+          "phone_number": {
+            "type": "string",
+            "example": "+250788000000"
+          },
+          "wallet_address": {
+            "type": "string",
+            "example": "0x22614252CEa754Ac8eFaCfAe4Cb5C6917C39C020"
+          },
+          "did_identifier": {
+            "type": "string",
+            "example": "did:key:z6Mk..."
+          },
+          "logo_url": {
+            "type": "string",
+            "example": "https://example.com/logo.png"
+          }
+        },
+        "required": [
+          "name",
+          "email"
+        ]
+      },
+      "UpdateUniversityDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Aurora University"
+          },
+          "email": {
+            "type": "string",
+            "example": "registrar@aurora.edu"
+          },
+          "phone_number": {
+            "type": "string",
+            "example": "+250788000000"
+          },
+          "wallet_address": {
+            "type": "string",
+            "example": "0x22614252CEa754Ac8eFaCfAe4Cb5C6917C39C020"
+          },
+          "did_identifier": {
+            "type": "string",
+            "example": "did:key:z6Mk..."
+          },
+          "logo_url": {
+            "type": "string",
+            "example": "https://example.com/logo.png"
+          }
+        }
+      },
+      "CertificateStatsDto": {
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "number",
+            "example": 120
+          },
+          "verified": {
+            "type": "number",
+            "example": 85
+          },
+          "issued": {
+            "type": "number",
+            "example": 35
+          }
+        },
+        "required": [
+          "total",
+          "verified",
+          "issued"
+        ]
+      },
+      "IssueToBlockchainDto": {
+        "type": "object",
+        "properties": {
+          "certificateIds": {
+            "example": [
+              "Vpg3YCjx7i1O",
+              "bIyUukh5jm40"
+            ],
+            "description": "Certificate IDs to issue on the Optimism blockchain",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "certificateIds"
+        ]
+      },
+      "IssueToBlockchainResponseDto": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "example": true
+          },
+          "transactionHash": {
+            "type": "string",
+            "example": "0xabc123..."
+          },
+          "certificatesIssued": {
+            "type": "number",
+            "example": 10
+          },
+          "explorerUrl": {
+            "type": "string",
+            "example": "https://sepolia-optimistic.etherscan.io/tx/0xabc123..."
+          }
+        },
+        "required": [
+          "success",
+          "transactionHash",
+          "certificatesIssued",
+          "explorerUrl"
+        ]
+      },
+      "UpdateCertificateDto": {
+        "type": "object",
+        "properties": {
+          "degree_title": {
+            "type": "string",
+            "example": "B.Sc. Computer Science"
+          },
+          "graduation_year": {
+            "type": "number",
+            "example": 2026
+          },
+          "class_award": {
+            "type": "string",
+            "example": "First Class Honours"
+          }
+        }
+      },
+      "CertificateSummaryDto": {
+        "type": "object",
+        "properties": {
+          "certificate_id": {
+            "type": "string",
+            "example": "Vpg3YCjx7i1O"
+          },
+          "student_name": {
+            "type": "string",
+            "example": "Alice Uwimana"
+          },
+          "student_id_number": {
+            "type": "string",
+            "example": "STU2024001"
+          },
+          "degree_title": {
+            "type": "string",
+            "example": "B.Sc. Computer Science"
+          },
+          "graduation_year": {
+            "type": "number",
+            "example": 2024
+          },
+          "class_award": {
+            "type": "string",
+            "example": "First Class Honours"
+          },
+          "university_name": {
+            "type": "string",
+            "example": "Aurora University"
+          }
+        },
+        "required": [
+          "certificate_id",
+          "student_name",
+          "student_id_number",
+          "degree_title",
+          "graduation_year",
+          "university_name"
+        ]
+      },
+      "VerificationBlockchainDto": {
+        "type": "object",
+        "properties": {
+          "transaction_hash": {
+            "type": "string",
+            "example": "0xabc123..."
+          },
+          "timestamp": {
+            "type": "string",
+            "example": "2024-06-15T10:30:00.000Z"
+          }
+        }
+      },
+      "VerificationMetaDto": {
+        "type": "object",
+        "properties": {
+          "database_hash_match": {
+            "type": "boolean",
+            "example": true
+          },
+          "blockchain_verified": {
+            "type": "boolean",
+            "example": true
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "ISSUED",
+              "VERIFIED",
+              "REVOKED"
+            ]
+          }
+        },
+        "required": [
+          "database_hash_match",
+          "blockchain_verified",
+          "status"
+        ]
+      },
+      "VerificationSuccessResponseDto": {
+        "type": "object",
+        "properties": {
+          "isValid": {
+            "type": "boolean",
+            "example": true
+          },
+          "certificate": {
+            "$ref": "#/components/schemas/CertificateSummaryDto"
+          },
+          "blockchain": {
+            "$ref": "#/components/schemas/VerificationBlockchainDto"
+          },
+          "verification": {
+            "$ref": "#/components/schemas/VerificationMetaDto"
+          },
+          "message": {
+            "type": "string",
+            "example": "Credential is authentic and has not been tampered with."
+          }
+        },
+        "required": [
+          "isValid",
+          "certificate",
+          "blockchain",
+          "verification",
+          "message"
+        ]
+      },
+      "BatchUploadResponseDto": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Batch uploaded successfully"
+          },
+          "studentsCount": {
+            "type": "number",
+            "example": 25
+          },
+          "certificatesCount": {
+            "type": "number",
+            "example": 25
+          }
+        },
+        "required": [
+          "message",
+          "studentsCount",
+          "certificatesCount"
+        ]
+      },
+      "UploadBatchDataDto": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            },
+            "description": "Parsed rows from the Excel batch upload"
+          },
+          "university_id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "550e8400-e29b-41d4-a716-446655440000"
+          }
+        },
+        "required": [
+          "data",
+          "university_id"
+        ]
+      },
+      "VerificationFailureResponseDto": {
+        "type": "object",
+        "properties": {
+          "isValid": {
+            "type": "boolean",
+            "example": false
+          },
+          "message": {
+            "type": "string",
+            "example": "No on-chain record found for this credential hash."
+          }
+        },
+        "required": [
+          "isValid",
+          "message"
+        ]
+      }
+    }
+  }
+}
