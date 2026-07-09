@@ -190,7 +190,7 @@ They are enforced in code:
 ## 9. Clone the project
 
 ```bash
-git clone <YOUR_REPOSITORY_URL> "Certificate verification platform"
+git clone https://github.com/Arisangaroger/Certificate-verification-platform-stack.git "Certificate verification platform"
 cd "Certificate verification platform"
 ```
 
